@@ -17,16 +17,49 @@ public class VideoCompress {
         return task;
     }
 
+    public static boolean compressVideoHighSync(String srcPath, String destPath, final CompressListener listener) {
+        return VideoController.getInstance().convertVideo(srcPath, destPath, VideoController.COMPRESS_QUALITY_HIGH, new VideoController.CompressProgressListener() {
+            @Override
+            public void onProgress(float percent) {
+                if(listener!=null){
+                    listener.onProgress(percent);
+                }
+            }
+        });
+    }
+
     public static VideoCompressTask compressVideoMedium(String srcPath, String destPath, CompressListener listener) {
         VideoCompressTask task = new VideoCompressTask(listener, VideoController.COMPRESS_QUALITY_MEDIUM);
         task.execute(srcPath, destPath);
         return task;
     }
 
+    public static boolean compressVideoMediumSync(String srcPath, String destPath, final CompressListener listener) {
+        return VideoController.getInstance().convertVideo(srcPath, destPath, VideoController.COMPRESS_QUALITY_MEDIUM, new VideoController.CompressProgressListener() {
+            @Override
+            public void onProgress(float percent) {
+                if(listener!=null){
+                    listener.onProgress(percent);
+                }
+            }
+        });
+    }
+
     public static VideoCompressTask compressVideoLow(String srcPath, String destPath, CompressListener listener) {
         VideoCompressTask task =  new VideoCompressTask(listener, VideoController.COMPRESS_QUALITY_LOW);
         task.execute(srcPath, destPath);
         return task;
+    }
+
+    public static boolean compressVideoLowSync(String srcPath, String destPath, final CompressListener listener) {
+        return VideoController.getInstance().convertVideo(srcPath, destPath, VideoController.COMPRESS_QUALITY_LOW, new VideoController.CompressProgressListener() {
+            @Override
+            public void onProgress(float percent) {
+                if(listener!=null){
+                    listener.onProgress(percent);
+                }
+            }
+        });
     }
 
     private static class VideoCompressTask extends AsyncTask<String, Float, Boolean> {
